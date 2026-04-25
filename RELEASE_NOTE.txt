@@ -1,0 +1,30 @@
+VYRNOX v1.0 Stable Release
+
+Author:
+Cyber Expert Sunil Choudhary
+
+Overview:
+VYRNOX is a professional cyber security testing toolkit designed for API analysis, vulnerability detection, fuzzing, reflection detection, and security reporting.
+
+This stable release includes:
+
+- API Request Engine
+- GET / POST support
+- Vulnerability Detection
+- Reflection Detection
+- Reflection Risk Classification
+- Response Comparison
+- Input Fuzzing Engine
+- Attack Insight Engine
+- Risk Summary System
+- Professional Report Generation
+- Timestamped Reports
+- Final Summary Reports
+
+Mission:
+This is not just a Python project.
+
+This is a Cyber Security Identity Building Mission.
+
+Version:
+VYRNOX v1.0 Stable

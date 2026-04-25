@@ -11,7 +11,7 @@ from scanner.vuln_scanner import scan_response
 from scanner.attack_insight import generate_insight
 from scanner.fuzzer import fuzz_get_param
 from scanner.risk_summary import calculate_risk_summary
-from config import APP_NAME, AUTHOR, VERSION
+from config import TOOL_NAME, AUTHOR, VERSION
 from reporting.report_generator import save_fuzz_report
 
 def get_headers():
@@ -158,13 +158,13 @@ def run_fuzzer():
         target_url=base_url,
         parameter_name=param_name
     )
-    print("\n  Report saved: reports/fuzz_report.txt")
+    print("\n  Report saved: reports/sample_security_report.txt")
 
     print("=" * 50)
 
 def main():
     print("=" * 50)
-    print(f"      {APP_NAME} - API ENGINE {VERSION}")
+    print(f"      {TOOL_NAME} - API ENGINE {VERSION}")
     print(f"      Author: {AUTHOR}")
     print("=" * 50)
 

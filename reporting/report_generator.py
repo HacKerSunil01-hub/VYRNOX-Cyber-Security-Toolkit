@@ -11,7 +11,7 @@ def save_fuzz_report(
     fuzz_results,
     target_url="N/A",
     parameter_name="N/A",
-    file_path="reports/fuzz_report.txt"
+    file_path="reports/sample_security_report.txt"
 ):
     scan_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 

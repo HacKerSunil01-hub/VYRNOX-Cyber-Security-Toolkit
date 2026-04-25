@@ -1,14 +1,15 @@
 # =========================================
 # Tool: VYRNOX Cyber Security Toolkit
 # Author: Cyber Expert Sunil Choudhary
-# Module: Logger Utility
+# Module: Logger
 # =========================================
 
-from config import APP_NAME
+from config import TOOL_NAME
+
 
 def log(message):
-    print(f"[{APP_NAME} LOG] {message}")
+    print(f"[{TOOL_NAME} LOG] {message}")
 
 
 def log_error(message):
-    print(f"[{APP_NAME} ERROR] {message}")
+    print(f"[{TOOL_NAME} ERROR] {message}")

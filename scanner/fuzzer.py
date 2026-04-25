@@ -30,7 +30,7 @@ def fuzz_get_param(base_url, param_name="q"):
             "status_code": base_res.status_code,
             "response_body": base_res.text
         }
-    except:
+    except requests.exceptions.RequestException:
         base_response = {
             "status_code": 0,
             "response_body": ""
@@ -65,7 +65,18 @@ def fuzz_get_param(base_url, param_name="q"):
                 "status_code": "TIMEOUT",
                 "response_length": 0,
                 "analysis": ["Request timed out"],
-                "reflection": "No reflection analysis"
+                "reflection": "No reflection analysis",
+                "reflection_risk": "SAFE"
+            })
+
+        except requests.exceptions.RequestException as e:
+            results.append({
+                "payload": payload,
+                "status_code": f"ERROR: {str(e)}",
+                "response_length": 0,
+                "analysis": ["Request failed"],
+                "reflection": "No reflection analysis",
+                "reflection_risk": "SAFE"
             })
 
     return results
