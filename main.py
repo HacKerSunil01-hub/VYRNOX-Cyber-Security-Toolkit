@@ -6,13 +6,21 @@
 
 import json
 from core.api_engine import APIEngine
-from utils.logger import log, log_error
+from utils.logger import log, log_error, print_banner, print_section, print_subsection
 from scanner.vuln_scanner import scan_response
 from scanner.attack_insight import generate_insight
 from scanner.fuzzer import fuzz_get_param
 from scanner.risk_summary import calculate_risk_summary
 from config import TOOL_NAME, AUTHOR, VERSION
 from reporting.report_generator import save_fuzz_report
+from scanner.auth_checker import check_authentication
+from scanner.header_checker import check_security_headers
+from scanner.token_detector import detect_tokens
+from scanner.login_form_analyzer import analyze_login_form
+from scanner.session_checker import check_session_security
+from scanner.multi_target_scanner import scan_multiple_targets
+
+
 
 def get_headers():
     headers_input = input("Enter headers as JSON (or press Enter to skip): ").strip()
@@ -55,9 +63,8 @@ def get_post_data():
 
 
 def display_result(result):
-    print("\n" + "=" * 50)
-    print("API RESPONSE RESULT")
-    print("=" * 50)
+    print_section("API RESPONSE RESULT")
+
 
     if result.get("success"):
         print(f"Status Code     : {result['status_code']}")
@@ -101,9 +108,7 @@ def display_result(result):
 
 
 def run_fuzzer():
-    print("\n" + "=" * 50)
-    print("INPUT FUZZING ENGINE")
-    print("=" * 50)
+    print_section("INPUT FUZZING ENGINE")
 
     base_url = input("Enter base URL for fuzzing: ").strip()
     if not base_url:
@@ -155,28 +160,218 @@ def run_fuzzer():
 
     save_fuzz_report(
         fuzz_results,
-        target_url=base_url,
-        parameter_name=param_name
+        base_url,
+        param_name
     )
     print("\n  Report saved: reports/sample_security_report.txt")
 
     print("=" * 50)
 
+
+def run_auth_checker():
+    print("\n" + "=" * 50)
+    print("AUTHENTICATION CHECKER")
+    print("=" * 50)
+
+    url = input("Enter URL to check authentication indicators: ").strip()
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Checking authentication indicators on: {url}")
+
+    findings = check_authentication(url)
+
+    print("\nAuthentication Findings:")
+    for finding in findings:
+        print(f"- {finding}")
+
+    print("=" * 50)
+
+
+def run_header_checker():
+    print("\n" + "=" * 50)
+    print("SECURITY HEADER CHECKER")
+    print("=" * 50)
+
+    url = input("Enter URL to check security headers: ").strip()
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Checking security headers on: {url}")
+
+    findings = check_security_headers(url)
+
+    print("\nSecurity Header Findings:")
+    for finding in findings:
+        print(f"- {finding}")
+
+    print("=" * 50)
+
+
+def run_token_detector():
+    print("\n" + "=" * 50)
+    print("TOKEN DETECTION ENGINE")
+    print("=" * 50)
+
+    url = input("Enter URL to detect tokens: ").strip()
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Checking token indicators on: {url}")
+
+    findings = detect_tokens(url)
+
+    print("\nToken Detection Findings:")
+    for finding in findings:
+        print(f"- {finding}")
+
+    print("=" * 50)
+
+
+def run_session_checker():
+    print("\n" + "=" * 50)
+    print("SESSION SECURITY CHECKER")
+    print("=" * 50)
+
+    url = input("Enter URL to check session security: ").strip()
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Checking session security on: {url}")
+
+    findings = check_session_security(url)
+
+    print("\nSession Security Findings:")
+    for finding in findings:
+        print(f"- {finding}")
+
+    print("=" * 50)
+
+
+def run_multi_target_scanner():
+    print("\n" + "=" * 50)
+    print("MULTI-TARGET SCANNER")
+    print("=" * 50)
+
+    print("Enter target URLs one by one.")
+    print("When finished, type: done")
+
+    urls = []
+
+    while True:
+        url = input("Enter URL: ").strip()
+
+        if url.lower() == "done":
+            break
+
+        if url:
+            urls.append(url)
+
+    if not urls:
+        log_error("No URLs provided!")
+        return
+
+    log(f"Starting multi-target scan for {len(urls)} target(s)")
+
+    results = scan_multiple_targets(urls)
+
+    print("\nMulti-Target Scan Results:")
+
+    for result in results:
+        print("\n" + "-" * 50)
+        print(f"Target URL: {result['url']}")
+
+        print("\nSecurity Header Findings:")
+        for item in result["headers"]:
+            print(f"- {item}")
+
+        print("\nAuthentication Findings:")
+        for item in result["authentication"]:
+            print(f"- {item}")
+
+        print("\nToken Findings:")
+        for item in result["tokens"]:
+            print(f"- {item}")
+
+        print("\nSession Findings:")
+        for item in result["session"]:
+            print(f"- {item}")
+
+    print("=" * 50)
+
+
+def run_login_form_analyzer():
+    print("\n" + "=" * 50)
+    print("LOGIN FORM ANALYZER")
+    print("=" * 50)
+
+    url = input("Enter URL to analyze login form: ").strip()
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Analyzing login form on: {url}")
+
+    findings = analyze_login_form(url)
+
+    print("\nLogin Form Findings:")
+    for finding in findings:
+        print(f"- {finding}")
+
+    print("=" * 50)
+
+
 def main():
-    print("=" * 50)
-    print(f"      {TOOL_NAME} - API ENGINE {VERSION}")
-    print(f"      Author: {AUTHOR}")
-    print("=" * 50)
+    print_banner()
+    print(f"Version : {VERSION}")
+    print(f"Author  : {AUTHOR}")
 
     print("\nSelect Mode:")
     print("1. API Request Engine")
     print("2. Input Fuzzing Engine")
-
-    mode = input("Enter choice (1/2): ").strip()
+    print("3. Authentication Checker")
+    print("4. Security Header Checker")
+    print("5. Token Detection Engine")
+    print("6. Login Form Analyzer") 
+    print("7. Session Security Checker")
+    print("8. Multi-Target Scanner")
+    
+    
+    
+    mode = input("Enter choice (1/2/3/4/5/6/7/8): ").strip()
 
     if mode == "2":
         run_fuzzer()
         return
+
+    elif mode == "3":
+        run_auth_checker()
+        return
+
+    elif mode == "4":
+        run_header_checker()
+        return
+
+    elif mode == "5":
+        run_token_detector()
+        return
+
+    elif mode == "6":
+        run_login_form_analyzer()
+        return
+
+    elif mode == "7":
+        run_session_checker()
+        return
+
+    elif mode == "8":
+        run_multi_target_scanner()
+        return
+
     elif mode != "1":
         log_error("Invalid choice!")
         return
