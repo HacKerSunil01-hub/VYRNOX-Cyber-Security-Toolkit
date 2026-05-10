@@ -1,5 +1,13 @@
 # VYRNOX Cyber Security Toolkit
 
+--
+### Respectfully Dedicated to Asif Farooq Sir**  
+
+- Python Instructor | ASD Academy, Kota
+- A small student gift of respect, gratitude, and learning.
+
+--
+
 ## Author
 Cyber Expert Sunil Choudhary
 
@@ -14,6 +22,22 @@ This tool helps analyze web applications and APIs by sending requests, detecting
 It is designed for ethical hacking practice, internship projects, real-world security learning, and professional portfolio building.
 
 ---
+
+## Dedication
+
+**VYRNOX Phase 1 – Free Learning Edition** is respectfully dedicated to **Asif Farooq Sir**, Python Instructor at **ASD Academy**.
+
+This phase of the project represents my learning foundation, discipline, and practical growth in Python and cybersecurity.
+
+Asif Sir’s guidance, support, and motivation helped me rebuild my coding confidence and bring my cybersecurity learning journey back on track. Whenever I felt stuck in code, logic, or career direction, his support inspired me to keep learning and improving step by step.
+
+This dedication is a small student gift of respect, gratitude, and learning.
+
+
+Respectfully dedicated by:
+Sunil Choudhary
+
+--
 
 ## Core Features
 

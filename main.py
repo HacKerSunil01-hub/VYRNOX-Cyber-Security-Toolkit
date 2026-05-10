@@ -19,8 +19,26 @@ from scanner.token_detector import detect_tokens
 from scanner.login_form_analyzer import analyze_login_form
 from scanner.session_checker import check_session_security
 from scanner.multi_target_scanner import scan_multiple_targets
+from scanner.form_tester import analyze_forms
 
-
+def show_dedication():
+    print("=" * 60)
+    print(" VYRNOX Phase 1 - Free Learning Edition")
+    print("=" * 60)
+    print()
+    print(" Respectfully Dedicated to:")
+    print(" Asif Farooq Sir")
+    print(" Python Instructor | ASD Academy")
+    print()
+    print(" This phase is a small student gift of respect,")
+    print(" gratitude, and learning.")
+    print()
+    print(" Thank you Sir for helping me rebuild my coding")
+    print(" confidence and guiding me in my cybersecurity journey.")
+    print()
+    print(" - Sunil Choudhary")
+    print("=" * 60)
+    print()
 
 def get_headers():
     headers_input = input("Enter headers as JSON (or press Enter to skip): ").strip()
@@ -325,7 +343,28 @@ def run_login_form_analyzer():
     print("=" * 50)
 
 
+def run_form_tester():
+    print_section("FORM TESTING ENGINE")
+
+    url = input("Enter URL to analyze forms: ").strip()
+
+    if not url:
+        log_error("URL cannot be empty!")
+        return
+
+    log(f"Analyzing forms on: {url}")
+
+    results = analyze_forms(url)
+
+    print_subsection("Form Analysis Findings")
+
+    for item in results:
+        print(f"- {item}")
+
+
 def main():
+    show_dedication()
+
     print_banner()
     print(f"Version : {VERSION}")
     print(f"Author  : {AUTHOR}")
@@ -339,10 +378,10 @@ def main():
     print("6. Login Form Analyzer") 
     print("7. Session Security Checker")
     print("8. Multi-Target Scanner")
+    print("9. Form Testing Engine")
     
     
-    
-    mode = input("Enter choice (1/2/3/4/5/6/7/8): ").strip()
+    mode = input("Enter choice (1/2/3/4/5/6/7/8/9): ").strip()
 
     if mode == "2":
         run_fuzzer()
@@ -371,6 +410,10 @@ def main():
     elif mode == "8":
         run_multi_target_scanner()
         return
+
+    elif mode == "9":
+        run_form_tester()
+        return 
 
     elif mode != "1":
         log_error("Invalid choice!")
